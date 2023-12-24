@@ -22,6 +22,7 @@ dash = "^2.14.2"
 dash-core-components = "^2.0.0"
 dash-html-components = "^2.0.0"
 streamlit = "^1.29.0"
+watchdog = "^3.0.0"
 
 
 [build-system]
