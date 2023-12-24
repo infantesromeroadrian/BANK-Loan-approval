@@ -17,6 +17,10 @@ nltk = "^3.8.1"
 jupyter = "^1.0.0"
 jupyterlab = "^4.0.9"
 torch = "^2.1.2"
+plotly = "^5.18.0"
+dash = "^2.14.2"
+dash-core-components = "^2.0.0"
+dash-html-components = "^2.0.0"
 
 
 [build-system]
