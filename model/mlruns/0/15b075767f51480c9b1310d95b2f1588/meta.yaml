@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/adrianinfantes/Desktop/AIR/COLLEGE%20AND%20STUDIES/Data_Scientist_formation/BankProjects/HomeLoanApproval/notebooks/mlruns/0/15b075767f51480c9b1310d95b2f1588/artifacts
+end_time: 1703433372931
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 15b075767f51480c9b1310d95b2f1588
+run_name: resilient-hare-913
+run_uuid: 15b075767f51480c9b1310d95b2f1588
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1703433372917
+status: 4
+tags: []
+user_id: adrianinfantes

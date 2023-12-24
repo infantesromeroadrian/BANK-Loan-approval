@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1703433658145
+current_stage: None
+description: null
+last_updated_timestamp: 1703433658145
+name: Regresión Logística (Mejor)
+run_id: 38738fb6c97a45e7a2626a0d7a0872d2
+run_link: null
+source: file:///Users/adrianinfantes/Desktop/AIR/COLLEGE%20AND%20STUDIES/Data_Scientist_formation/BankProjects/HomeLoanApproval/notebooks/mlruns/0/38738fb6c97a45e7a2626a0d7a0872d2/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///Users/adrianinfantes/Desktop/AIR/COLLEGE%20AND%20STUDIES/Data_Scientist_formation/BankProjects/HomeLoanApproval/notebooks/mlruns/0/38738fb6c97a45e7a2626a0d7a0872d2/artifacts/model
+user_id: null
+version: 1
