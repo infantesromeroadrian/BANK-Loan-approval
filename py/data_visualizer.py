@@ -25,6 +25,9 @@ class DataVisualizer:
     def plot_scatter(self, x_column, y_column, title):
         return px.scatter(self.dataframe, x=x_column, y=y_column, title=title)
 
+    def plot_distribution(self, column, title):
+        return self.plot_histogram(column, title)
+
 # Cargar los datos
 data_loader = pd.read_csv("/Users/adrianinfantes/Desktop/AIR/COLLEGE AND STUDIES/Data_Scientist_formation/BankProjects/HomeLoanApproval/data/loan_sanction_train.csv")
 visualizer = DataVisualizer(data_loader)

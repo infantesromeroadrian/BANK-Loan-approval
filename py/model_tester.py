@@ -17,13 +17,16 @@ class ModelTester:
         with mlflow.start_run():
             model.fit(self.X_train, self.y_train)
             y_pred = model.predict(self.X_test)
+            y_pred_proba = model.predict_proba(self.X_test)[:, 1]  # Obtener probabilidades de la clase positiva
 
             accuracy = accuracy_score(self.y_test, y_pred)
-            f1 = f1_score(self.y_test, y_pred)
-            auc = roc_auc_score(self.y_test, y_pred)
+            f1 = f1_score(self.y_test, y_pred, pos_label='Y')
+            auc = roc_auc_score(self.y_test, y_pred_proba)  # Usar probabilidades aquí
+
 
             print(f"Resultados para {model_name}:")
             print(f"  Precisión: {accuracy:.2f}, F1-Score: {f1:.2f}, AUC: {auc:.2f}")
+
 
             mlflow.log_param("model_name", model_name)
             mlflow.log_metric("accuracy", accuracy)

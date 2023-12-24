@@ -47,7 +47,8 @@ def main():
     data_visualizer = DataVisualizer(data_preprocessor.dataframe)
     columns_to_visualize = ['Gender', 'Married', 'Dependents', 'Self_Employed', 'Credit_History', 'Loan_Status']
     for col in columns_to_visualize:
-        data_visualizer.plot_distribution(col)
+        data_visualizer.plot_histogram(column=col, title=f"Distribución de {col}")
+
 
     # División de los datos
     data_splitter = DataSplitter(data_preprocessor.dataframe)
