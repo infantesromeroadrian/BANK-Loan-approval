@@ -12,6 +12,7 @@ class DataPreprocessor:
         self.columns_to_scale = ['ApplicantIncome', 'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term']
 
     def handle_missing_values(self):
+        # Rellenar valores faltantes en columnas numéricas y categóricas
         numeric_cols = self.dataframe.select_dtypes(include=np.number).columns
         for col in numeric_cols:
             self.dataframe[col].fillna(self.dataframe[col].median(), inplace=True)
@@ -21,28 +22,31 @@ class DataPreprocessor:
             self.dataframe[col].fillna(self.dataframe[col].mode()[0], inplace=True)
 
     def encode_binary_columns(self):
+        # Mapeo de valores binarios
         mappings = {'Male': 1, 'Female': 0, 'Yes': 1, 'No': 0, 'Y': 1, 'N': 0}
         columns = ['Gender', 'Married', 'Self_Employed']
-        if 'Loan_Status' in self.dataframe.columns:
-            columns.append('Loan_Status')
         for col in columns:
             if col in self.dataframe.columns:
                 self.dataframe[col] = self.dataframe[col].map(mappings)
 
     def encode_dependents(self):
+        # Codificación de dependientes
         if 'Dependents' in self.dataframe.columns:
             self.dataframe['Dependents'] = self.dataframe['Dependents'].replace({'3+': 3}).astype(int)
 
     def apply_one_hot_encoding(self):
+        # Aplicar One-Hot Encoding
         encoded = self.encoder.fit_transform(self.dataframe[self.columns_to_encode])
         cols = [f"{col}_{category}" for col in self.columns_to_encode for category in self.encoder.categories_[self.columns_to_encode.index(col)]]
         self.dataframe[cols] = encoded
         self.dataframe.drop(self.columns_to_encode, axis=1, inplace=True)
 
     def scale_numeric_columns(self):
+        # Escalar columnas numéricas
         self.dataframe[self.columns_to_scale] = self.scaler.fit_transform(self.dataframe[self.columns_to_scale])
 
     def preprocess(self, new_data):
+        # Función para preprocesar nuevos datos
         new_data = new_data.copy()
         self.handle_missing_values()
         self.encode_binary_columns()
@@ -52,6 +56,7 @@ class DataPreprocessor:
         return new_data
 
     def save_transformers(self, scaler_path, encoder_path):
+        # Guardar el scaler y el encoder
         with open(scaler_path, 'wb') as f:
             pickle.dump(self.scaler, f)
         with open(encoder_path, 'wb') as f:
