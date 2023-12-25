@@ -5,48 +5,33 @@ import os
 
 
 # Función para preprocesar los datos de entrada
-def preprocess_input(input_data, scaler, encoder):    # Rellenar valores NaN con valores predeterminados
-    input_data.fillna({
-        'Gender': 'Unknown',
-        'Married': 'Unknown',
-        'Dependents': 0,
-        'Education': 'Unknown',
-        'Self_Employed': 'Unknown',
-        'ApplicantIncome': 0,
-        'CoapplicantIncome': 0,
-        'LoanAmount': 0,
-        'Loan_Amount_Term': 360,
-        'Credit_History': 1,
-        'Property_Area': 'Unknown'
-    }, inplace=True)
+def preprocess_input(input_data, scaler, encoder):
+    # Asignar valores a categorías conocidas
+    input_data['Gender'] = input_data['Gender'].map({'Male': 1, 'Female': 0, 'Other': -1}).fillna(-1)
+    input_data['Married'] = input_data['Married'].map({'Yes': 1, 'No': 0}).fillna(-1)
+    input_data['Dependents'] = input_data['Dependents'].replace({'3+': 3}).astype(int).fillna(0)
+    input_data['Self_Employed'] = input_data['Self_Employed'].map({'Yes': 1, 'No': 0}).fillna(-1)
 
-    # Convertir a valores binarios o numéricos y realizar One-Hot Encoding
-    input_data['Dependents'] = input_data['Dependents'].replace({'3+': 3}).astype(int)
-    input_data['Gender'] = input_data['Gender'].map({'Male': 1, 'Female': 0, 'Unknown': -1})
-    input_data['Married'] = input_data['Married'].map({'Yes': 1, 'No': 0, 'Unknown': -1})
-    input_data['Self_Employed'] = input_data['Self_Employed'].map({'Yes': 1, 'No': 0, 'Unknown': -1})
-    input_data['Education'] = input_data['Education'].astype(str)
-    input_data['Property_Area'] = input_data['Property_Area'].astype(str)
-    encoded = encoder.transform(input_data[['Education', 'Property_Area']])
-    encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out(['Education', 'Property_Area']))
-    input_data = pd.concat([input_data, encoded_df], axis=1).drop(['Education', 'Property_Area'], axis=1)
+    # Conservar 'Education' y 'Property_Area' como texto para One-Hot Encoding
+    input_data['Education'] = input_data['Education'].fillna('Unknown')
+    input_data['Property_Area'] = input_data['Property_Area'].fillna('Unknown')
 
     # Escalar columnas numéricas
     numeric_cols = ['ApplicantIncome', 'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term']
     input_data[numeric_cols] = scaler.transform(input_data[numeric_cols])
 
+    # Aplicar One-Hot Encoding para 'Education' y 'Property_Area'
+    categorical_cols = ['Education', 'Property_Area']
+    encoded = encoder.transform(input_data[categorical_cols])
+    encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out(categorical_cols))
+    input_data = pd.concat([input_data, encoded_df], axis=1).drop(categorical_cols, axis=1)
+
     # Asegurar presencia y orden de columnas necesarias
-    expected_cols = ['Gender', 'Married', 'Dependents', 'Self_Employed', 'ApplicantIncome', 'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term', 'Credit_History', 'Education_Graduate', 'Education_Not Graduate', 'Property_Area_Urban', 'Property_Area_Semiurban', 'Property_Area_Rural']
-    missing_cols = set(expected_cols) - set(input_data.columns)
-    for c in missing_cols:
-        input_data[c] = 0
-    input_data = input_data[expected_cols]
+    expected_cols = ['Gender', 'Married', 'Dependents', 'Self_Employed', 'ApplicantIncome',
+                     'CoapplicantIncome', 'LoanAmount', 'Loan_Amount_Term', 'Credit_History'] + list(encoded_df.columns)
+    input_data = input_data.reindex(columns=expected_cols, fill_value=0)
 
     return input_data
-
-
-
-
 
 
 # Carga del scaler, encoder y modelo
