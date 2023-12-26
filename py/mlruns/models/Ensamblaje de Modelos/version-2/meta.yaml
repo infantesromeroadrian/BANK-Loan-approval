@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1703623462100
+current_stage: None
+description: null
+last_updated_timestamp: 1703623462100
+name: Ensamblaje de Modelos
+run_id: 41a48dd492dc4afd9b496d07c1e4ac93
+run_link: null
+source: file:///Users/adrianinfantes/Desktop/AIR/COLLEGE%20AND%20STUDIES/Data_Scientist_formation/BankProjects/HomeLoanApproval/py/mlruns/0/41a48dd492dc4afd9b496d07c1e4ac93/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///Users/adrianinfantes/Desktop/AIR/COLLEGE%20AND%20STUDIES/Data_Scientist_formation/BankProjects/HomeLoanApproval/py/mlruns/0/41a48dd492dc4afd9b496d07c1e4ac93/artifacts/model
+user_id: null
+version: 2
